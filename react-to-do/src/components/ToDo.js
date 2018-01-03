@@ -3,7 +3,10 @@
  class ToDo extends Component {
  render() {
      return (
-       <li>a todo will go here </li>
+      <li>
+        <input type="checkbox" checked={ this.props.isCompleted } />
+        <span>{ this.props.description }</span>
+      </li>//this renders the description prop
      );
    }
  }
