@@ -10,20 +10,40 @@ class App extends Component {
          { description: 'Walk the cat', isCompleted: true },
          { description: 'Throw the dishes away', isCompleted: false },
          { description: 'Buy new dishes', isCompleted: false }
-       ] // each object is a to do with properties description and completed
+       ],
+        newTodoDescription: ''
      }; // basically,  the to-dos  are stored in this.state.todos as an array of objects.
   }
 
+      handleChange(e) {
+      this.setState({ newTodoDescription: e.target.value })
+      }
+
+      handleSubmit(e) {
+        e.preventDefault();
+        if (!this.state.newTodoDescription) { return }
+        const newTodo = { description: this.state.newTodoDescription, isCompleted: false };
+        this.setState({ todos: [...this.state.todos, newTodo], newTodoDescription: '' });
+      }
+  toggleComplete(index) {
+      const todos = this.state.todos.slice();
+      const todo = todos[index];
+      todo.isCompleted = todo.isCompleted ? false : true;
+      this.setState({ todos: todos });
+    }
 
   render() {
     return (
       <div className="App">
       <ul>
-      // loop through list of to do items and create a ToDo component for each
-      { this.state.todos.map( (todo, index) =>
-        <ToDo key={ index } description={ todo.description } isCompleted={ todo.isCompleted } />
+      { this.state.todos.map( (todo, index) => //map
+        <ToDo key={ index } description={ todo.description } isCompleted={ todo.isCompleted } toggleComplete={ () => this.toggleComplete(index) } />
       )}
        </ul>
+        <form onSubmit={ (e) => this.handleSubmit(e) }>
+           <input type="text" value={ this.state.newTodoDescription } onChange={ (e) => this.handleChange(e) } />
+           <input type="submit" />
+        </form>
       </div>
     );
   }
