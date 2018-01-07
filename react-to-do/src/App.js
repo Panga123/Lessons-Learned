@@ -19,6 +19,7 @@ class App extends Component {
     return (
       <div className="App">
       <ul>
+      // loop through list of to do items and create a ToDo component for each
       { this.state.todos.map( (todo, index) =>
         <ToDo key={ index } description={ todo.description } isCompleted={ todo.isCompleted } />
       )}
